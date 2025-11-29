@@ -1,0 +1,53 @@
+name: mol-gnn
+channels:
+  - pytorch
+  - pyg
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.9
+  - pip
+  
+  # PyTorch and related
+  - pytorch>=1.12.0
+  - torchvision
+  - torchaudio
+  - cudatoolkit=11.6  # Adjust based on your CUDA version, or use cpuonly
+  
+  # PyTorch Geometric
+  - pyg>=2.1.0
+  
+  # Scientific computing
+  - numpy>=1.21.0
+  - pandas>=1.3.0
+  - scikit-learn>=1.0.0
+  - scipy>=1.7.0
+  
+  # Chemistry
+  - rdkit>=2022.03.1
+  
+  # Visualization
+  - matplotlib>=3.5.0
+  - seaborn>=0.11.0
+  
+  # Utilities
+  - joblib>=1.1.0
+  - pyyaml>=6.0
+  - tqdm>=4.62.0
+  
+  # Jupyter
+  - jupyter
+  - ipykernel
+  - ipywidgets
+  
+  # Development tools
+  - pytest>=7.0.0
+  - black
+  - flake8
+  
+  # Install via pip
+  - pip:
+    - optuna>=3.0.0
+    - pytest-cov>=3.0.0
+

@@ -1,0 +1,87 @@
+# Configuration file for Molecular GNN Training
+# Copy this file and modify parameters as needed
+
+# Data Configuration
+data:
+  data_path: "data/data.csv"  # Path to input CSV file
+  test_size: 0.2              # Fraction of data for testing
+  val_size: 0.15              # Fraction of training data for validation
+  
+# Model Configuration
+model:
+  gnn_type: "gat"             # Options: 'gcn', 'gat', 'gin', 'graphconv'
+  hidden_channels: 256        # Number of hidden channels
+  num_layers: 3               # Number of GNN layers
+  dropout: 0.2                # Dropout rate
+  pool_type: "combined"       # Options: 'mean', 'max', 'add', 'combined', 'attention'
+  heads: 4                    # Number of attention heads (for GAT)
+  use_residual: true          # Use residual connections
+  use_batch_norm: true        # Use batch normalization
+  activation: "relu"          # Options: 'relu', 'gelu', 'swish'
+
+# Training Configuration
+training:
+  batch_size: 64              # Batch size for training
+  learning_rate: 0.001        # Initial learning rate
+  weight_decay: 0.0001        # L2 regularization
+  max_epochs: 250             # Maximum number of epochs
+  early_stopping_patience: 25 # Early stopping patience
+  scheduler:
+    type: "ReduceLROnPlateau" # Options: 'ReduceLROnPlateau', 'CosineAnnealing', 'StepLR'
+    factor: 0.5               # Factor for ReduceLROnPlateau
+    patience: 10              # Patience for ReduceLROnPlateau
+    min_lr: 0.000001          # Minimum learning rate
+
+# Hyperparameter Optimization
+optuna:
+  enabled: true               # Enable hyperparameter optimization
+  n_trials: 50                # Number of optimization trials
+  timeout: null               # Timeout in seconds (null for no timeout)
+  sampler: "TPE"              # Options: 'TPE', 'Random', 'Grid'
+  pruner: "Median"            # Options: 'Median', 'Hyperband', 'None'
+  
+  # Search space for hyperparameters
+  search_space:
+    batch_size: [32, 64, 128, 256]
+    hidden_channels: [128, 256, 384, 512]
+    dropout: [0.1, 0.5]
+    learning_rate: [0.0001, 0.01]  # Log scale
+    weight_decay: [0.000001, 0.001]  # Log scale
+    gnn_type: ["gcn", "gat", "gin", "graphconv"]
+    pool_type: ["mean", "max", "add", "combined", "attention"]
+    num_layers: [2, 5]
+    heads: [2, 4, 8]  # For GAT only
+
+# Output Configuration
+output:
+  output_dir: "results"
+  model_dir: "models"
+  optuna_dir: "optuna_results"
+  viz_dir: "visualization_results"
+  save_predictions: true
+  save_embeddings: false
+  
+# Logging Configuration
+logging:
+  log_level: "INFO"           # Options: 'DEBUG', 'INFO', 'WARNING', 'ERROR'
+  log_file: "training.log"
+  tensorboard: false          # Enable TensorBoard logging
+  wandb: false                # Enable Weights & Biases logging
+  wandb_project: "molecular-gnn"
+
+# Reproducibility
+random_seed: 42
+
+# Computational Resources
+compute:
+  device: "auto"              # Options: 'auto', 'cuda', 'cpu'
+  num_workers: 4              # Number of data loading workers
+  pin_memory: true            # Pin memory for faster GPU transfer
+  
+# Evaluation Configuration
+evaluation:
+  metrics: ["accuracy", "precision", "recall", "f1_score", "auc_roc"]
+  confusion_matrix: true
+  classification_report: true
+  save_plots: true
+
