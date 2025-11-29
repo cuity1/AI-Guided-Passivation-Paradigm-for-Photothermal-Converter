@@ -3,10 +3,6 @@
  * 
  * This header file defines the public interface for the solar tracking system.
  * It includes function declarations, data structures, and configuration constants.
- * 
- * Author: Research Team
- * Date: November 2025
- * Version: 1.0
  */
 
 #ifndef PHOTOTACTIC_SYSTEM_H
@@ -292,4 +288,5 @@ float phototactic_saturate(float value, float min, float max);
 #endif
 
 #endif // PHOTOTACTIC_SYSTEM_H
+
 
